@@ -1,0 +1,20 @@
+version: "3.5"
+services:
+  selenium-hub:
+    image: selenium/hub:3.2.0-actinium
+    container_name: selenium-hub
+    ports:
+      - "4444:4444"
+    environment:
+      - GRID_TIMEOUT=300
+      - GRID_BROWSER_TIMEOUT=300
+  chrome:
+    image: selenium/node-chrome:3.2.0-actinium
+    restart: always
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_PORT_4444_TCP_ADDR=selenium-hub
+      - HUB_PORT_4444_TCP_PORT=4444
+      - SCREEN_WIDTH=1600
+      - SCREEN_HEIGHT=1200
